@@ -1,0 +1,33 @@
+services:
+  # Backend Service (Python/FastAPI)
+  - type: web
+    name: financial-control-backend
+    runtime: docker
+    rootDir: backend
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: FRONTEND_URL
+        fromService:
+          type: web
+          name: financial-control-appfinancial-control
+          property: url
+        # Update this after deploying the frontend
+    # Persistent disk for data storage
+    disk:
+      name: data-storage
+      mountPath: /app/data
+      sizeGB: 1
+
+  # Frontend Service (React/Vite)
+  - type: web
+    name: financial-control-appfinancial-control
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: financial-control-backend
+          property: url

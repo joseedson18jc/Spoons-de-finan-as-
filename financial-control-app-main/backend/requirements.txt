@@ -1,0 +1,13 @@
+fastapi
+argon2-cffi==25.1.0
+uvicorn
+pandas
+openpyxl
+python-multipart
+pydantic
+openai
+python-jose[cryptography]
+passlib[bcrypt]
+python-dotenv
+scikit-learn
+
